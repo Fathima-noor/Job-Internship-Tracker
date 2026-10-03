@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard - JobTrack</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+    <div class="dashboard-container">
+
+        <header class="dashboard-header">
+
+            <div>
+
+                <h1>JobTrack</h1>
+
+                <p>
+                    Job & Internship Application Tracker
+                </p>
+
+            </div>
+
+            <div class="user-section">
+
+                <span>
+                    Welcome, {{ user_name }}
+                </span>
+
+                <a href="{{ url_for('logout') }}"
+                   class="logout-button">
+
+                    Logout
+
+                </a>
+
+            </div>
+
+        </header>
+
+
+        <main class="dashboard-content">
+
+            <section class="welcome-section">
+
+                <div>
+
+                    <h2>Dashboard</h2>
+
+                    <p>
+                        Track and manage your career applications.
+                    </p>
+
+                </div>
+
+                <a href="{{ url_for('add_application') }}"
+                   class="primary-button">
+
+                    + Add Application
+
+                </a>
+
+            </section>
+
+
+            <section class="stats-grid">
+
+                <div class="stat-card">
+
+                    <span class="stat-icon">📋</span>
+
+                    <h3>Total Applications</h3>
+
+                    <p>{{ total }}</p>
+
+                </div>
+
+                <div class="stat-card">
+
+                    <span class="stat-icon">🎯</span>
+
+                    <h3>Interviews</h3>
+
+                    <p>{{ interviews }}</p>
+
+                </div>
+
+                <div class="stat-card">
+
+                    <span class="stat-icon">🏆</span>
+
+                    <h3>Selected</h3>
+
+                    <p>{{ selected }}</p>
+
+                </div>
+
+                <div class="stat-card">
+
+                    <span class="stat-icon">❌</span>
+
+                    <h3>Rejected</h3>
+
+                    <p>{{ rejected }}</p>
+
+                </div>
+
+            </section>
+
+
+            <section class="dashboard-actions">
+
+                <a href="{{ url_for('applications') }}"
+                   class="dashboard-card">
+
+                    <h3>📋 My Applications</h3>
+
+                    <p>
+                        View, search, edit and delete applications.
+                    </p>
+
+                </a>
+
+                <a href="{{ url_for('add_application') }}"
+                   class="dashboard-card">
+
+                    <h3>➕ Add Application</h3>
+
+                    <p>
+                        Add a new job or internship application.
+                    </p>
+
+                </a>
+
+            </section>
+
+
+            <section class="recent-section">
+
+                <div class="section-header">
+
+                    <h2>Recent Applications</h2>
+
+                    <a href="{{ url_for('applications') }}">
+                        View All
+                    </a>
+
+                </div>
+
+
+                {% if recent %}
+
+                    <div class="application-table-container">
+
+                        <table class="application-table">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>Company</th>
+                                    <th>Job Title</th>
+                                    <th>Type</th>
+                                    <th>Status</th>
+                                    <th>Date</th>
+
+                                </tr>
+
+                            </thead>
+
+                            <tbody>
+
+                                {% for application in recent %}
+
+                                    <tr>
+
+                                        <td>
+                                            {{ application["company"] }}
+                                        </td>
+
+                                        <td>
+                                            {{ application["job_title"] }}
+                                        </td>
+
+                                        <td>
+                                            {{ application["application_type"] }}
+                                        </td>
+
+                                        <td>
+
+                                            <span class="status-badge">
+                                                {{ application["status"] }}
+                                            </span>
+
+                                        </td>
+
+                                        <td>
+                                            {{ application["application_date"] or "-" }}
+                                        </td>
+
+                                    </tr>
+
+                                {% endfor %}
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                {% else %}
+
+                    <div class="empty-state">
+
+                        <h3>No applications yet</h3>
+
+                        <p>
+                            Add your first application to start tracking.
+                        </p>
+
+                        <a href="{{ url_for('add_application') }}"
+                           class="primary-button">
+
+                            Add Application
+
+                        </a>
+
+                    </div>
+
+                {% endif %}
+
+            </section>
+
+        </main>
+
+    </div>
+
+</body>
+
+</html>

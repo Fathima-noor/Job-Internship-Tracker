@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Add Application - JobTrack</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+    <div class="dashboard-container">
+
+        <header class="dashboard-header">
+
+            <div>
+
+                <h1>JobTrack</h1>
+
+                <p>
+                    Job & Internship Application Tracker
+                </p>
+
+            </div>
+
+            <div class="user-section">
+
+                <span>
+                    {{ session["user_name"] }}
+                </span>
+
+                <a href="{{ url_for('logout') }}"
+                   class="logout-button">
+
+                    Logout
+
+                </a>
+
+            </div>
+
+        </header>
+
+
+        <main class="dashboard-content">
+
+            <div class="page-header">
+
+                <div>
+
+                    <h2>Add Application</h2>
+
+                    <p>
+                        Add a new job or internship application.
+                    </p>
+
+                </div>
+
+                <a href="{{ url_for('applications') }}"
+                   class="secondary-button">
+
+                    ← Back
+
+                </a>
+
+            </div>
+
+
+            <section class="form-card">
+
+                <form method="POST">
+
+                    <div class="form-grid">
+
+                        <div class="form-group">
+
+                            <label>Company Name *</label>
+
+                            <input
+                                type="text"
+                                name="company"
+                                placeholder="e.g. Google"
+                                required
+                            >
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label>Job Title *</label>
+
+                            <input
+                                type="text"
+                                name="job_title"
+                                placeholder="e.g. Python Developer Intern"
+                                required
+                            >
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label>Application Type *</label>
+
+                            <select name="application_type"
+                                    required>
+
+                                <option value="">
+                                    Select Type
+                                </option>
+
+                                <option value="Job">
+                                    Job
+                                </option>
+
+                                <option value="Internship">
+                                    Internship
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label>Location</label>
+
+                            <input
+                                type="text"
+                                name="location"
+                                placeholder="e.g. Bangalore / Remote"
+                            >
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label>Application Date</label>
+
+                            <input
+                                type="date"
+                                name="application_date"
+                            >
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label>Deadline</label>
+
+                            <input
+                                type="date"
+                                name="deadline"
+                            >
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label>Status *</label>
+
+                            <select name="status"
+                                    required>
+
+                                <option value="">
+                                    Select Status
+                                </option>
+
+                                <option value="Applied">
+                                    Applied
+                                </option>
+
+                                <option value="Interview">
+                                    Interview
+                                </option>
+
+                                <option value="Selected">
+                                    Selected
+                                </option>
+
+                                <option value="Rejected">
+                                    Rejected
+                                </option>
+
+                                <option value="Withdrawn">
+                                    Withdrawn
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label>Salary / Stipend</label>
+
+                            <input
+                                type="text"
+                                name="salary"
+                                placeholder="e.g. ₹25,000/month"
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>Job URL</label>
+
+                        <input
+                            type="url"
+                            name="job_url"
+                            placeholder="https://example.com/job"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>Notes</label>
+
+                        <textarea
+                            name="notes"
+                            rows="5"
+                            placeholder="Interview details, recruiter information, preparation notes..."
+                        ></textarea>
+
+                    </div>
+
+
+                    <div class="form-actions">
+
+                        <a href="{{ url_for('applications') }}"
+                           class="secondary-button">
+
+                            Cancel
+
+                        </a>
+
+                        <button type="submit"
+                                class="primary-button">
+
+                            Save Application
+
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </section>
+
+        </main>
+
+    </div>
+
+</body>
+
+</html>

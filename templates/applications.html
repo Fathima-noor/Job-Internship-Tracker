@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Applications - JobTrack</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+    <div class="dashboard-container">
+
+        <header class="dashboard-header">
+
+            <div>
+
+                <h1>JobTrack</h1>
+
+                <p>
+                    Job & Internship Application Tracker
+                </p>
+
+            </div>
+
+            <div class="user-section">
+
+                <span>
+                    {{ session["user_name"] }}
+                </span>
+
+                <a href="{{ url_for('logout') }}"
+                   class="logout-button">
+
+                    Logout
+
+                </a>
+
+            </div>
+
+        </header>
+
+
+        <main class="dashboard-content">
+
+            <div class="page-header">
+
+                <div>
+
+                    <h2>My Applications</h2>
+
+                    <p>
+                        Search and manage all your applications.
+                    </p>
+
+                </div>
+
+                <a href="{{ url_for('add_application') }}"
+                   class="primary-button">
+
+                    + Add Application
+
+                </a>
+
+            </div>
+
+
+            <!-- Filters -->
+
+            <form method="GET"
+                  class="filter-bar">
+
+                <input
+                    type="text"
+                    name="search"
+                    value="{{ search }}"
+                    placeholder="Search company, job title..."
+                >
+
+                <select name="status">
+
+                    <option value="">
+                        All Status
+                    </option>
+
+                    <option value="Applied"
+                        {% if selected_status == "Applied" %}selected{% endif %}>
+                        Applied
+                    </option>
+
+                    <option value="Interview"
+                        {% if selected_status == "Interview" %}selected{% endif %}>
+                        Interview
+                    </option>
+
+                    <option value="Selected"
+                        {% if selected_status == "Selected" %}selected{% endif %}>
+                        Selected
+                    </option>
+
+                    <option value="Rejected"
+                        {% if selected_status == "Rejected" %}selected{% endif %}>
+                        Rejected
+                    </option>
+
+                    <option value="Withdrawn"
+                        {% if selected_status == "Withdrawn" %}selected{% endif %}>
+                        Withdrawn
+                    </option>
+
+                </select>
+
+
+                <select name="type">
+
+                    <option value="">
+                        All Types
+                    </option>
+
+                    <option value="Job"
+                        {% if selected_type == "Job" %}selected{% endif %}>
+                        Job
+                    </option>
+
+                    <option value="Internship"
+                        {% if selected_type == "Internship" %}selected{% endif %}>
+                        Internship
+                    </option>
+
+                </select>
+
+
+                <button type="submit"
+                        class="primary-button">
+
+                    Filter
+
+                </button>
+
+                <a href="{{ url_for('applications') }}"
+                   class="secondary-button">
+
+                    Clear
+
+                </a>
+
+            </form>
+
+
+            {% if applications %}
+
+                <div class="application-table-container">
+
+                    <table class="application-table">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Company</th>
+                                <th>Job Title</th>
+                                <th>Type</th>
+                                <th>Location</th>
+                                <th>Status</th>
+                                <th>Deadline</th>
+                                <th>Actions</th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            {% for application in applications %}
+
+                                <tr>
+
+                                    <td>
+                                        <strong>
+                                            {{ application["company"] }}
+                                        </strong>
+                                    </td>
+
+                                    <td>
+                                        {{ application["job_title"] }}
+                                    </td>
+
+                                    <td>
+                                        {{ application["application_type"] }}
+                                    </td>
+
+                                    <td>
+                                        {{ application["location"] or "-" }}
+                                    </td>
+
+                                    <td>
+
+                                        <span class="status-badge">
+
+                                            {{ application["status"] }}
+
+                                        </span>
+
+                                    </td>
+
+                                    <td>
+                                        {{ application["deadline"] or "-" }}
+                                    </td>
+
+                                    <td class="action-buttons">
+
+                                        <a
+                                            href="{{ url_for('edit_application', id=application['id']) }}"
+                                            class="edit-button">
+
+                                            Edit
+
+                                        </a>
+
+
+                                        <form
+                                            method="POST"
+                                            action="{{ url_for('delete_application', id=application['id']) }}"
+                                            onsubmit="return confirmDelete();"
+                                            style="display:inline;">
+
+                                            <button
+                                                type="submit"
+                                                class="delete-button">
+
+                                                Delete
+
+                                            </button>
+
+                                        </form>
+
+                                    </td>
+
+                                </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            {% else %}
+
+                <div class="empty-state">
+
+                    <h3>No applications found</h3>
+
+                    <p>
+                        Try changing your search or add a new application.
+                    </p>
+
+                    <a href="{{ url_for('add_application') }}"
+                       class="primary-button">
+
+                        Add Application
+
+                    </a>
+
+                </div>
+
+            {% endif %}
+
+        </main>
+
+    </div>
+
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+</body>
+
+</html>

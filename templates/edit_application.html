@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Edit Application - JobTrack</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+    <div class="dashboard-container">
+
+        <header class="dashboard-header">
+
+            <div>
+
+                <h1>JobTrack</h1>
+
+                <p>
+                    Job & Internship Application Tracker
+                </p>
+
+            </div>
+
+            <div class="user-section">
+
+                <span>
+                    {{ session["user_name"] }}
+                </span>
+
+                <a href="{{ url_for('logout') }}"
+                   class="logout-button">
+
+                    Logout
+
+                </a>
+
+            </div>
+
+        </header>
+
+
+        <main class="dashboard-content">
+
+            <div class="page-header">
+
+                <div>
+
+                    <h2>Edit Application</h2>
+
+                    <p>
+                        Update your application details.
+                    </p>
+
+                </div>
+
+                <a href="{{ url_for('applications') }}"
+                   class="secondary-button">
+
+                    ← Back
+
+                </a>
+
+            </div>
+
+
+            <section class="form-card">
+
+                <form method="POST">
+
+                    <div class="form-grid">
+
+                        <div class="form-group">
+
+                            <label>Company Name *</label>
+
+                            <input
+                                type="text"
+                                name="company"
+                                value="{{ application['company'] }}"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>Job Title *</label>
+
+                            <input
+                                type="text"
+                                name="job_title"
+                                value="{{ application['job_title'] }}"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>Application Type *</label>
+
+                            <select name="application_type"
+                                    required>
+
+                                <option value="Job"
+                                    {% if application["application_type"] == "Job" %}selected{% endif %}>
+                                    Job
+                                </option>
+
+                                <option value="Internship"
+                                    {% if application["application_type"] == "Internship" %}selected{% endif %}>
+                                    Internship
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>Location</label>
+
+                            <input
+                                type="text"
+                                name="location"
+                                value="{{ application['location'] or '' }}"
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>Application Date</label>
+
+                            <input
+                                type="date"
+                                name="application_date"
+                                value="{{ application['application_date'] or '' }}"
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>Deadline</label>
+
+                            <input
+                                type="date"
+                                name="deadline"
+                                value="{{ application['deadline'] or '' }}"
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>Status *</label>
+
+                            <select name="status"
+                                    required>
+
+                                {% for status in [
+                                    "Applied",
+                                    "Interview",
+                                    "Selected",
+                                    "Rejected",
+                                    "Withdrawn"
+                                ] %}
+
+                                    <option value="{{ status }}"
+                                        {% if application["status"] == status %}selected{% endif %}>
+
+                                        {{ status }}
+
+                                    </option>
+
+                                {% endfor %}
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>Salary / Stipend</label>
+
+                            <input
+                                type="text"
+                                name="salary"
+                                value="{{ application['salary'] or '' }}"
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>Job URL</label>
+
+                        <input
+                            type="url"
+                            name="job_url"
+                            value="{{ application['job_url'] or '' }}"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>Notes</label>
+
+                        <textarea
+                            name="notes"
+                            rows="5"
+                        >{{ application['notes'] or '' }}</textarea>
+
+                    </div>
+
+
+                    <div class="form-actions">
+
+                        <a href="{{ url_for('applications') }}"
+                           class="secondary-button">
+
+                            Cancel
+
+                        </a>
+
+                        <button type="submit"
+                                class="primary-button">
+
+                            Update Application
+
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </section>
+
+        </main>
+
+    </div>
+
+</body>
+
+</html>
